@@ -22,7 +22,8 @@ export KBUILD_COMPILER_STRING=$(/home/user/toolchains/proton-clang/bin/clang --v
 export CXXFLAGS="$CXXFLAGS -fPIC"
 export DTC_EXT=dtc
 
-DEFCONFIG="defconfig"
+DEFCONFIG="gki_defconfig"
+#DEFCONFIG="haydn_QGKI_defconfig"
 
 # Path
 KERNEL_DIR=`pwd`
@@ -66,17 +67,18 @@ cd $ZIMAGE_DIR
 ls -a
 
 # Make a dtb file
-#find ~/op8T_2.1.4_haydn-r-oss/out-clang/arch/arm64/boot/dts/vendor/qcom -name '*.dtb' -exec cat {} + > ~/op8/out-clang/arch/arm64/boot/dtb
+#find ~/haydn-r-oss/out-clang12/arch/arm64/boot/dts/vendor/qcom -name '*.dtb' -exec cat {} + > ~/haydn-r-oss/out-clang12/arch/arm64/boot/dtb
 cd /home/user/haydn-r-oss/out-clang12/arch/arm64/boot/
-cat dts/vendor/qcom/lahaina.dtb dts/vendor/qcom/lahaina-v2.dtb dts/vendor/qcom/lahaina-v2.1.dtb > dtb
+cat dts/vendor/qcom/lahaina* > dtb
 ls -a
 
 # Put dtb and Image.gz in an AnyKernel3 zip archive and flash from TWRP
 AK_ZIP="$AK_VER.zip"
-cp dtb /home/user/AnyKernel3/
+#cp dtb /home/user/AnyKernel3/
 cp Image.gz /home/user/AnyKernel3/
 cd /home/user/AnyKernel3/
 rm Image
+rm dtb
 zip -r9 ${AK_ZIP} .
 ls *.zip
 mv ${AK_ZIP} /home/user/
